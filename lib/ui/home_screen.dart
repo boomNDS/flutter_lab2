@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Homescreen extends StatelessWidget{
+  String nametitle = "Home";
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -8,7 +9,7 @@ class Homescreen extends StatelessWidget{
       length: 5,
       child: Scaffold(
         appBar: AppBar(
-          title: Text("Home"),
+          title: Text("$nametitle"),
           centerTitle: true,
         ),
         bottomNavigationBar: Material(
@@ -34,13 +35,6 @@ class Homescreen extends StatelessWidget{
           )
         ),
         body: TabBarView(
-          // children: <Widget>[
-          //   Text("1" ,textAlign: TextAlign.center,),
-          //   Text("2",textAlign: TextAlign.center,),
-          //   Text("3",textAlign: TextAlign.center,),
-          //   Text("4",textAlign: TextAlign.center,),
-          //   Text("5",textAlign: TextAlign.center,),
-          // ],
           children: <Widget>[
             Center(
               child: Text("Home"),
@@ -56,7 +50,7 @@ class Homescreen extends StatelessWidget{
             ),
             Center(
               child: Text("Setup"),
-            )
+            ),
           ],
         ),
       )

@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
         "/first" : (context) => FirstScreen(), 
         "/register": (context) => RegisterForm(),
         "/home": (context) => Homescreen(),
-        "login": (context) => Loginform(),
+        "/login": (context) => Loginform(),
       },
     );
   }

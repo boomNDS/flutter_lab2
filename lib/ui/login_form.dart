@@ -10,13 +10,14 @@ class Loginform extends StatefulWidget{
 
 class LoginformState extends State<Loginform>{
   final _formKey = GlobalKey<FormState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   String _id;
   String _pass;
-
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
+      key: _scaffoldKey,
       body: Padding(
         padding: EdgeInsets.fromLTRB(50, 30, 50, 30),
         child:Form(
@@ -34,12 +35,12 @@ class LoginformState extends State<Loginform>{
                 icon: Icon(Icons.person),
               ),
               keyboardType: TextInputType.text,
-              onSaved: (value) => print(value),
+              onSaved: (id) => print(id),
                 validator: (value){
                   if(value.isEmpty){
                     return "Please  input value";
-                  }else if(value != "admin"){
-                    return "user or password ไม่ถูกต้อง";
+                  }else{
+                    _id = value;
                   }
                 },
             ),
@@ -51,18 +52,40 @@ class LoginformState extends State<Loginform>{
               ),
               keyboardType: TextInputType.text,
               obscureText: true,
-              onSaved: (value) => print(value),
+              onSaved: (pass) => print(pass),
                 validator: (value){
                   if(value.isEmpty){
                     return "Please  input value";
+                  }else{
+                    _pass = value;
                   }
                 },
             ),
             RaisedButton(
               child: Text("Login"),
               onPressed: (){
-                _formKey.currentState.validate();
-                Navigator.pushNamed(context, "/home");
+                // _formKey.currentState.validate();
+                if(_formKey.currentState.validate() == false){
+                  print("กรุณา ระบุuser or password");
+                  _scaffoldKey.currentState.showSnackBar(
+                    SnackBar(
+                    content: Text('กรุณา ระบุuser or password'),
+                    duration: Duration(seconds: 3),
+                    )
+                  );
+                }else if(_id == "admin" && _pass == "admin"){
+                  // Navigator.pushNamed(context, "/home");
+                  print("user or password ไม่ถูกต้อง");
+                  _scaffoldKey.currentState.showSnackBar(
+                    SnackBar(
+                    content: Text('user or password ไม่ถูกต้อง'),
+                    duration: Duration(seconds: 3),
+                    )
+                  );
+                }else{
+                  print("home");
+                  Navigator.pushReplacementNamed(context, "/home");
+                }
               },
             ),
             FlatButton(
@@ -84,4 +107,5 @@ class LoginformState extends State<Loginform>{
       ),
       ),
     );
-  }}
+  }
+}

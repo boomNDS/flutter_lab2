@@ -9,7 +9,10 @@ class RegisterForm extends StatefulWidget{
 }
 class RegisterFormState extends State<RegisterForm>{
   final _formKey = GlobalKey<FormState>();
-
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  String _id;
+  String _pass;
+  String _pass2;
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -26,15 +29,17 @@ class RegisterFormState extends State<RegisterForm>{
             children: <Widget>[
               TextFormField(
                 decoration: InputDecoration(
-                  labelText: "User ID",
-                  hintText:  "Please input your ID",
-                  icon: Icon(Icons.person),
+                  labelText: "Email",
+                  hintText:  "Please input your Email",
+                  icon: Icon(Icons.person,color: Colors.blue,),
                 ),
                 keyboardType: TextInputType.text,
                 onSaved: (value) => print(value),
                 validator: (value){
                   if(value.isEmpty){
                     return "Please input value";
+                  }else{
+                    _id = value;
                   }
                 },
               ),
@@ -42,7 +47,7 @@ class RegisterFormState extends State<RegisterForm>{
               decoration: InputDecoration(
                 labelText: "Password",
                 hintText: "Please input your password",
-                icon: Icon(Icons.lock),
+                icon: Icon(Icons.lock,color: Colors.blue,),
               ),
               keyboardType: TextInputType.text,
               obscureText: true,
@@ -50,6 +55,8 @@ class RegisterFormState extends State<RegisterForm>{
                 validator: (value){
                   if(value.isEmpty){
                     return "Please  input value";
+                  }else{
+                    _pass = value;
                   }
                 },
             ),
@@ -57,7 +64,7 @@ class RegisterFormState extends State<RegisterForm>{
               decoration: InputDecoration(
                 labelText: "Password",
                 hintText: "Please input your password again",
-                icon: Icon(Icons.lock),
+                icon: Icon(Icons.lock, color: Colors.blue,),
               ),
               keyboardType: TextInputType.text,
               obscureText: true,
@@ -65,19 +72,35 @@ class RegisterFormState extends State<RegisterForm>{
                 validator: (value){
                   if(value.isEmpty){
                     return "Please  input value";
+                  }else{
+                    _pass2 = value;
                   }
                 },
             ),
             RaisedButton(
               child: Text("Continue"),
               onPressed: (){
-                if(_formKey.currentState.validate()){
-                  print("validate");
-                  Scaffold.of(context)
-                  .showSnackBar(SnackBar(content: Text("Processing Data")));
+                _formKey.currentState.validate();
+                if(_id == "admin"){
+                  print("user นี้มีอยู่ใน ระบบแล้ว");
+                  _scaffoldKey.currentState.showSnackBar(
+                    SnackBar(
+                    content: Text('user นี้มีอยู่ใน ระบบแล้ว'),
+                    duration: Duration(seconds: 3),
+                    )
+                  );
+                }else if(_pass != _pass2){
+                  print("$_pass = $_pass2");
+                  print("password ของท่านไม่ตรงกัน");
+                  _scaffoldKey.currentState.showSnackBar(
+                    SnackBar(
+                    content: Text('password ของท่านไม่ตรงกัน'),
+                    duration: Duration(seconds: 3),
+                    )
+                  );
                 }else{
-                  print("not validate");
-                  Navigator.pushNamed(context, "/login");
+                  print("login");
+                  Navigator.pop(context);
                 }
               },
             ),
