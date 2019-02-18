@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import './detail_screen.dart';
+import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
+import 'package:intl/intl.dart';
 
 class FirstScreen extends StatefulWidget{
   @override
@@ -15,37 +17,44 @@ class FirstScreenState extends State{
  @override
   Widget build(BuildContext context){
     // TODO: implement createState
-    return Scaffold(
-      appBar: AppBar(
-        title:  Text("First Screen"),
-      ),
-      body: Form(
-        child: ListView(
-          children: <Widget>[
-            InputDecorator(
-              decoration: InputDecoration(
-                icon: Icon(Icons.people),
-                labelText:  "Passenger"
-              ),
-              isEmpty: _passenger == "",
-              child: DropdownButtonHideUnderline(
-                child: DropdownButton<String>(
-                  value: _passenger,
-                  isDense: true,
-                  onChanged: (value){
-                    setState(() {
-                    _passenger = value;                            
-                      });
-                  },
-                  items: _passengers.map((String value){
-                    return DropdownMenuItem(
-                      child: Text(value),
-                      value: value,
-                    );
-                  }).toList(),
+    DateTime date;
+        return Scaffold(
+          appBar: AppBar(
+            title:  Text("First Screen"),
+          ),
+          body: Form(
+            child: ListView(
+              children: <Widget>[
+                InputDecorator(
+                  decoration: InputDecoration(
+                    icon: Icon(Icons.people),
+                    labelText:  "Passenger"
+                  ),
+                  isEmpty: _passenger == "",
+                  child: DropdownButtonHideUnderline(
+                    child: DropdownButton<String>(
+                      value: _passenger,
+                      isDense: true,
+                      onChanged: (value){
+                        setState(() {
+                        _passenger = value;                            
+                          });
+                      },
+                      items: _passengers.map((String value){
+                        return DropdownMenuItem(
+                          child: Text(value),
+                          value: value,
+                        );
+                      }).toList(),
+                    ),
+                  ),
                 ),
-              ),
-            )
+                DateTimePickerFormField(
+                  inputType: InputType.date,
+                  initialDate: DateTime.now(),
+                  format: DateFormat("yyyy-mm-dd"),
+                  decoration: InputDecoration(labelText: "Date"),
+            ),
           ],
           ),
       )
