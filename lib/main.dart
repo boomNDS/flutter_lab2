@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import './ui/first_screen.dart';
 import './ui/second_screen.dart';
 import './ui/detail_screen.dart';
-import './ui/login_form.dart';
-import './ui/register_form.dart';
-import './ui/home_screen.dart';
+import './ui/my_custom_form.dart';
 
 void main() => runApp(MyApp());
 
@@ -20,12 +18,8 @@ class MyApp extends StatelessWidget {
       // home: MyHomePage(),
       initialRoute: "/",
       routes: {
-        "/": (context) => Loginform(),
+        "/": (context) => FirstScreen(),
         "/second": (context) => DetailScreen(title:"test"),
-        "/first" : (context) => FirstScreen(), 
-        "/register": (context) => RegisterForm(),
-        "/home": (context) => Homescreen(),
-        "/login": (context) => Loginform(),
       },
     );
   }
